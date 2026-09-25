@@ -15,7 +15,7 @@ jobs:
       - name: Display student and repo info
         run: |
           echo "Student Name: Suhani"
-          echo "Roll Number: <your roll number>"
+          echo "Roll Number: S24CSEU1123"
           echo "Current Date and Time: $(date)"
           echo "Repository: ${{ github.repository }}"
           echo "Branch: ${{ github.ref_name }}"

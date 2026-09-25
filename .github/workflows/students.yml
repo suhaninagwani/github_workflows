@@ -1,0 +1,50 @@
+name: Student Repository Check
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display student and repo info
+        run: |
+          echo "Student Name: Suhani"
+          echo "Roll Number: <your roll number>"
+          echo "Current Date and Time: $(date)"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+
+      - name: Verify student.txt exists
+        run: |
+          if [ -f student.txt ]; then
+            echo "student.txt exists."
+          else
+            echo "student.txt not found!"
+            exit 1
+          fi
+
+      - name: Display contents of student.txt
+        run: cat student.txt
+
+      - name: Count lines in student.txt
+        run: |
+          LINES=$(wc -l < student.txt)
+          echo "Number of lines: $LINES"
+
+      - name: Search for the word GitHub
+        run: grep -i "GitHub" student.txt || echo "Word 'GitHub' not found."
+
+      - name: Create report.txt
+        run: echo "Student repository verification completed." > report.txt
+
+      - name: Upload report.txt as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: student-report
+          path: report.txt
